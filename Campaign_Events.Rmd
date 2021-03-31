@@ -1,0 +1,55 @@
+---
+title: "Campaign Events"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(lubridate)
+library(plotly)
+
+
+
+events <- readRDS("events_saved.rds")
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+events_month <- events %>% mutate(month(date))
+
+Kamala_months <- events_month %>% filter(cand_lastname == "Harris") %>% 
+  group_by(month(date)) %>% 
+  count(month = month(date))
+
+figure1 <- Kamala_months %>% plot_ly(x = ~month, y = ~n, type = "bar")
+
+figure1_title <- figure1 %>% layout(title = "Total Trips Each Month by Harris")
+
+figure1_title
+
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
+

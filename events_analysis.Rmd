@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(lubridate)
+library(plotly)
 
 
 
@@ -51,8 +52,15 @@ events_month <- events %>% mutate(month(date))
 
 Kamala_months <- events_month %>% filter(cand_lastname == "Harris") %>% 
   group_by(month(date)) %>% 
-  count(month(date))
+  count(month = month(date))
 
 Kamala_months
+```
+```{r}
+figure1 <- Kamala_months %>% plot_ly(x = ~month, y = ~n, type = "bar")
+
+figure1_title <- figure1 %>% layout(title = "Total Trips Each Month by Harris")
+
+figure1_title
 ```
  
